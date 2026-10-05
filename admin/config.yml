@@ -1,0 +1,19 @@
+backend:
+  name: github
+  repo: nothing793/novel  # 替换成你的仓库
+  branch: main
+  base_url: https://你的代理地址          # 下一步会得到这个地址
+
+media_folder: "images/uploads"           # 上传图片的存放位置
+public_folder: "/images/uploads"
+
+collections:
+  - name: "posts"
+    label: "文章"
+    folder: "_posts"                     # Jekyll 的文章目录，若是 Hugo 可能是 content/posts
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "日期", name: "date", widget: "datetime" }
+      - { label: "正文", name: "body", widget: "markdown" }

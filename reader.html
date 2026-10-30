@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="paper">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="道门 · 六国旧事随流水，在线阅读。">
+  <title>阅读 · 道门</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f3eee2'/%3E%3Crect x='6' y='6' width='52' height='52' fill='none' stroke='%239c3029' stroke-width='3'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-size='34' fill='%239c3029' font-family='serif'%3E道%3C/text%3E%3C/svg%3E">
+  <script>
+    try {
+      document.documentElement.dataset.theme =
+        localStorage.getItem('daomen:theme') === 'night' ? 'night' : 'paper';
+      var savedSize = Number(localStorage.getItem('daomen:font-scale'));
+      if (Number.isFinite(savedSize) && savedSize >= 17 && savedSize <= 24) {
+        document.documentElement.style.setProperty('--reader-size', savedSize + 'px');
+      }
+    } catch (error) {}
+  </script>
+  <link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="reader-page">
+  <a class="skip-link" href="#chapter-content">跳到正文</a>
+
+  <div class="reading-progress" aria-hidden="true">
+    <span id="reading-progress-bar"></span>
+  </div>
+
+  <header class="reader-header">
+    <div class="reader-header-inner">
+      <a class="brand" href="index.html" aria-label="返回道门首页">
+        <span class="brand-seal" aria-hidden="true">道</span>
+        <span class="brand-copy">
+          <span class="brand-name">道门</span>
+          <span class="brand-sub">仙侠长卷</span>
+        </span>
+      </a>
+
+      <div class="reader-position" aria-live="polite">
+        <span id="reader-volume">卷一 · 六国旧事随流水</span>
+        <strong id="reader-chapter">正在载入</strong>
+      </div>
+
+      <div class="reader-actions" aria-label="阅读设置">
+        <button class="icon-button" type="button" id="font-decrease" aria-label="减小字号" title="减小字号">A−</button>
+        <button class="icon-button" type="button" id="font-increase" aria-label="增大字号" title="增大字号">A+</button>
+        <button class="icon-button" type="button" data-theme-button aria-label="切换到夜间阅读">
+          <span data-theme-icon aria-hidden="true">☾</span>
+          <span data-theme-text>夜读</span>
+        </button>
+        <button class="icon-button" type="button" id="toc-toggle" aria-controls="toc-panel" aria-expanded="false">
+          <span class="toc-icon" aria-hidden="true"></span>
+          <span>目录</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="reader-shell">
+    <aside class="toc-panel" id="toc-panel" aria-label="章节目录">
+      <div class="toc-heading">
+        <p class="eyebrow">卷一</p>
+        <h2>六国旧事随流水</h2>
+        <p class="toc-meta" id="toc-meta">— / —</p>
+      </div>
+      <nav class="toc-list" id="toc-list" aria-label="章节列表"></nav>
+    </aside>
+
+    <div class="toc-overlay" id="toc-overlay" aria-hidden="true"></div>
+
+    <main class="reader-main" id="main">
+      <article class="chapter-sheet" id="chapter-sheet" aria-live="polite">
+        <header class="chapter-head">
+          <p class="chapter-kicker" id="chapter-kicker">第一卷 · 六国旧事随流水</p>
+          <h1 id="chapter-title">正在载入</h1>
+          <p class="chapter-meta" id="chapter-meta"></p>
+        </header>
+        <div class="chapter-content" id="chapter-content">
+          <p>正在读取手稿……</p>
+        </div>
+      </article>
+
+      <p class="chapter-end"><span>本章完</span></p>
+
+      <nav class="chapter-pager" id="chapter-pager" aria-label="章节翻页"></nav>
+    </main>
+  </div>
+
+  <button class="back-to-top" type="button" id="back-to-top" aria-label="回到顶部" hidden>↑</button>
+
+  <noscript>
+    <div class="load-error">阅读页需要 JavaScript 从单一手稿文件中拆分章节，请开启 JavaScript 后刷新页面。</div>
+  </noscript>
+
+  <script src="assets/novel-core.js"></script>
+  <script src="assets/novel.js"></script>
+  <script src="assets/reader.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "daomen-novel-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "道门小说静态阅读站点",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  }
+}

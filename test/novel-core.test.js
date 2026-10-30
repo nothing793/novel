@@ -38,15 +38,41 @@ test('splitChapters 跳过目录，并按一级标题拆章', () => {
   assert.equal(chapters[1].name, '入咸阳');
 });
 
-test('真实手稿可以拆出 16 章', () => {
+test('真实手稿只拆出 16 个已编号章节', () => {
   const source = fs.readFileSync(path.join(projectRoot, '道门/第一卷.md'), 'utf8');
   const chapters = Core.splitChapters(source);
 
   assert.equal(chapters.length, 16);
   assert.equal(chapters[0].label, '第一章');
   assert.equal(chapters[0].name, '伊始');
+  assert.equal(chapters[15].label, '第十六章');
   assert.equal(chapters[15].name, '宫阙万间都做了土');
+  assert.ok(chapters.every((chapter) => chapter.label));
   assert.ok(chapters.reduce((sum, chapter) => sum + chapter.charCount, 0) > 40000);
+});
+
+test('splitChapters 不发布未编号的草稿章节', () => {
+  const markdown = [
+    '# 第一章 定稿',
+    '',
+    '已经完成的正文。',
+    '',
+    '# 尚未编号的草稿',
+    '',
+    '这段内容还没有写完。',
+    '',
+    '# 第二章 另一章',
+    '',
+    '第二章正文。'
+  ].join('\n');
+
+  const chapters = Core.splitChapters(markdown);
+
+  assert.equal(chapters.length, 2);
+  assert.equal(chapters[0].name, '定稿');
+  assert.equal(chapters[1].name, '另一章');
+  assert.doesNotMatch(chapters[0].body, /没有写完/);
+  assert.doesNotMatch(chapters[1].body, /没有写完/);
 });
 
 test('大纲可以解析出七卷', () => {

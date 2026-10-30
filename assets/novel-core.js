@@ -262,6 +262,8 @@
         var title = match[1].trim();
         if (title === '目录') return;
         var parsed = parseChapterTitle(title);
+        // 只有“第X章”形式的标题会进入站点；其他一级标题及其正文按草稿跳过。
+        if (!parsed.label) return;
         current = {
           label: parsed.label,
           name: parsed.name,

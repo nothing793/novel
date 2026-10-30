@@ -38,17 +38,17 @@ test('splitChapters 跳过目录，并按一级标题拆章', () => {
   assert.equal(chapters[1].name, '入咸阳');
 });
 
-test('真实手稿只拆出 16 个已编号章节', () => {
+test('真实手稿发布 12 个已编号章节，未编号草稿不计入', () => {
   const source = fs.readFileSync(path.join(projectRoot, '道门/第一卷.md'), 'utf8');
   const chapters = Core.splitChapters(source);
 
-  assert.equal(chapters.length, 16);
+  assert.equal(chapters.length, 12);
   assert.equal(chapters[0].label, '第一章');
   assert.equal(chapters[0].name, '伊始');
-  assert.equal(chapters[15].label, '第十六章');
-  assert.equal(chapters[15].name, '宫阙万间都做了土');
+  assert.equal(chapters[11].label, '第十二章');
+  assert.equal(chapters[11].name, '若许君太平，君却恋繁生');
   assert.ok(chapters.every((chapter) => chapter.label));
-  assert.ok(chapters.reduce((sum, chapter) => sum + chapter.charCount, 0) > 40000);
+  assert.ok(chapters.reduce((sum, chapter) => sum + chapter.charCount, 0) > 35000);
 });
 
 test('splitChapters 不发布未编号的草稿章节', () => {

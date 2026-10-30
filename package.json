@@ -1,8 +1,8 @@
 {
-  "name": "daomen-novel-site",
+  "name": "nothing793-works-site",
   "version": "1.0.0",
   "private": true,
-  "description": "道门小说静态阅读站点",
+  "description": "nothing793 作品集静态阅读站点",
   "scripts": {
     "test": "node --test test/*.test.js"
   }

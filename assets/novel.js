@@ -2,8 +2,7 @@
   'use strict';
 
   var SOURCES = {
-    outline: '道门/大纲.md',
-    volumeOne: '道门/第一卷.md'
+    content: '道门/正文.md'
   };
 
   var KEYS = {
@@ -12,8 +11,7 @@
     theme: 'daomen:theme'
   };
 
-  var volumePromise = null;
-  var outlinePromise = null;
+  var contentPromise = null;
 
   function readStorage(key, fallback) {
     try {
@@ -135,22 +133,13 @@
     });
   }
 
-  function loadVolume() {
-    if (!volumePromise) {
-      volumePromise = fetchText(SOURCES.volumeOne).then(function (markdown) {
+  function loadContent() {
+    if (!contentPromise) {
+      contentPromise = fetchText(SOURCES.content).then(function (markdown) {
         return window.NovelCore.splitChapters(markdown);
       });
     }
-    return volumePromise;
-  }
-
-  function loadOutline() {
-    if (!outlinePromise) {
-      outlinePromise = fetchText(SOURCES.outline).then(function (markdown) {
-        return window.NovelCore.parseOutline(markdown);
-      });
-    }
-    return outlinePromise;
+    return contentPromise;
   }
 
   window.NovelSite = {
@@ -161,8 +150,7 @@
     getFontScale: getFontScale,
     getProgress: getProgress,
     getTheme: getTheme,
-    loadOutline: loadOutline,
-    loadVolume: loadVolume,
+    loadContent: loadContent,
     readerUrl: readerUrl,
     saveProgress: saveProgress,
     setFontScale: setFontScale,

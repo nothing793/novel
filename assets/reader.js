@@ -208,7 +208,7 @@
     currentIndex = index;
 
     chapterTitle.textContent = chapter.name;
-    chapterKicker.textContent = '第一卷 · 六国旧事随流水 · ' + labelFor(chapter, index);
+    chapterKicker.textContent = '道门 · ' + labelFor(chapter, index);
     chapterMeta.textContent =
       Core.formatCount(chapter.charCount) + ' · ' +
       Core.formatReadingTime(chapter.charCount);
@@ -222,7 +222,7 @@
     document.title = chapter.name + ' · 道门';
     var description = document.querySelector('meta[name="description"]');
     if (description) {
-      description.setAttribute('content', chapter.name + '，道门 · 六国旧事随流水在线阅读。');
+      description.setAttribute('content', chapter.name + '，道门在线阅读。');
     }
 
     highlightToc(index);
@@ -372,7 +372,7 @@
     }
   });
 
-  Site.loadVolume().then(function (data) {
+  Site.loadContent().then(function (data) {
     chapters = data;
     if (!chapters.length) {
       throw new Error('手稿中没有找到以“# 章节名”开头的章节标题。');

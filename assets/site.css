@@ -476,18 +476,6 @@ button { color: inherit; }
   writing-mode: vertical-rl;
 }
 
-.book-subtitle {
-  position: absolute;
-  top: 86px;
-  right: 118px;
-  color: rgba(239, 230, 210, 0.7);
-  font-family: var(--font-serif);
-  font-size: 15px;
-  letter-spacing: 0.22em;
-  line-height: 1.6;
-  writing-mode: vertical-rl;
-}
-
 .book-seal {
   position: absolute;
   right: 36px;
@@ -665,58 +653,6 @@ button { color: inherit; }
   from { opacity: 0.15; transform: scaleX(0.45); }
   to { opacity: 0.9; transform: scaleX(1); }
 }
-
-.volumes-section { padding-top: 18px; }
-
-.volume-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-  margin-top: 28px;
-}
-
-.volume-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 146px;
-  padding: 22px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  text-decoration: none;
-  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
-}
-
-.volume-card:hover {
-  border-color: var(--line-strong);
-  transform: translateY(-2px);
-}
-
-.volume-card.is-live {
-  border-color: rgba(156, 48, 41, 0.34);
-  background: linear-gradient(150deg, var(--red-soft), var(--surface) 72%);
-}
-
-.volume-label {
-  color: var(--red);
-  font-size: 9px;
-  letter-spacing: 0.24em;
-}
-
-.volume-name {
-  margin: 16px 0;
-  font-family: var(--font-serif);
-  font-size: clamp(19px, 2vw, 24px);
-  line-height: 1.4;
-}
-
-.volume-status {
-  color: var(--muted);
-  font-size: 10px;
-  letter-spacing: 0.16em;
-}
-
-.volume-card.is-live .volume-status { color: var(--red); }
 
 .site-footer {
   margin-top: clamp(40px, 7vw, 90px);
@@ -1568,8 +1504,6 @@ button { color: inherit; }
 
   .chapter-grid { gap: 0 36px; }
 
-  .volume-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
   .work-card { grid-template-columns: 190px minmax(0, 1fr); }
 
   .reader-header-inner { gap: 12px; }
@@ -1697,8 +1631,6 @@ button { color: inherit; }
   }
 
   .chapter-name { font-size: 18px; }
-
-  .volume-grid { grid-template-columns: minmax(0, 1fr); }
 
   .footer-inner {
     flex-direction: column;

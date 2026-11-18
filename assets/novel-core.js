@@ -223,15 +223,27 @@
   }
 
   function parseChapterTitle(title) {
-    var match = String(title || '').match(
+    var text = String(title || '').trim();
+    var match = text.match(
+      /^第\s*([一二三四五六七八九十百千零〇两\d]+)\s*卷[\s·、：:，,.]*第\s*([一二三四五六七八九十百千零〇两\d]+)\s*章[\s·、：:，,.]*(.*)$/
+    );
+    if (match) {
+      return {
+        label: '第' + match[1] + '卷 第' + match[2] + '章',
+        name: match[3].trim() || text,
+        volume: match[1],
+        chapter: match[2]
+      };
+    }
+    match = text.match(
       /^第\s*([一二三四五六七八九十百千零〇两\d]+)\s*章[\s·、：:，,.]*(.*)$/
     );
     if (!match) {
-      return { label: '', name: String(title || '').trim() };
+      return { label: '', name: text };
     }
     return {
       label: '第' + match[1] + '章',
-      name: match[2].trim() || String(title || '').trim()
+      name: match[2].trim() || text
     };
   }
 
@@ -262,8 +274,10 @@
         var title = match[1].trim();
         if (title === '目录') return;
         var parsed = parseChapterTitle(title);
-        // 只有“第X章”形式的标题会进入站点；其他一级标题及其正文按草稿跳过。
+        // 只有“第X章”或“第X卷 第Y章”形式的标题会进入站点；其他一级标题及其正文按草稿跳过。
         if (!parsed.label) return;
+        // 带“（草稿）”标记的卷章标题仍按草稿跳过。
+        if (/[（(]草稿[）)]\s*$/.test(parsed.name)) return;
         current = {
           label: parsed.label,
           name: parsed.name,
@@ -280,45 +294,6 @@
     return chapters.map(function (chapter, index) {
       chapter.index = index;
       return chapter;
-    });
-  }
-
-  function parseOutline(markdown) {
-    var lines = normalize(markdown).split('\n');
-    var volumes = [];
-    var current = null;
-
-    function flush() {
-      if (!current) return;
-      var body = cleanBody(current.bodyLines.join('\n'));
-      var match = current.title.match(
-        /^第\s*([一二三四五六七八九十百千零〇两\d]+)\s*卷[\s·、：:，,.]*(.*)$/
-      );
-      volumes.push({
-        label: match ? '第' + match[1] + '卷' : '',
-        name: match ? (match[2].trim() || current.title) : current.title,
-        title: current.title,
-        body: body,
-        description: stripMarkdown(body).replace(/\s+/g, ' ').trim()
-      });
-      current = null;
-    }
-
-    lines.forEach(function (line) {
-      var match = line.match(/^#\s+(.+?)\s*$/);
-      if (match) {
-        flush();
-        current = { title: match[1].trim(), bodyLines: [] };
-        return;
-      }
-      if (current) current.bodyLines.push(line);
-    });
-
-    flush();
-
-    return volumes.map(function (volume, index) {
-      volume.index = index;
-      return volume;
     });
   }
 
@@ -343,7 +318,6 @@
     formatReadingTime: formatReadingTime,
     normalize: normalize,
     parseChapterTitle: parseChapterTitle,
-    parseOutline: parseOutline,
     renderMarkdown: renderMarkdown,
     splitChapters: splitChapters,
     stripMarkdown: stripMarkdown

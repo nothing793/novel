@@ -4,7 +4,6 @@
   var Core = window.NovelCore;
   var Site = window.NovelSite;
   var chapterList = document.getElementById('chapter-list');
-  var volumeList = document.getElementById('volume-list');
   var statChapters = document.getElementById('stat-chapters');
   var statWords = document.getElementById('stat-words');
   var continueLink = document.getElementById('continue-reading');
@@ -96,54 +95,7 @@
     }
   }
 
-  function renderVolumes(volumes, chapterCount) {
-    if (!volumeList || !volumes.length) return;
-    var fragment = document.createDocumentFragment();
-
-    volumes.forEach(function (volume, index) {
-      var live = index === 0;
-      var card = document.createElement(live ? 'a' : 'div');
-      card.className = 'volume-card' + (live ? ' is-live' : '');
-      if (live) card.href = Site.readerUrl(0);
-
-      var label = document.createElement('span');
-      label.className = 'volume-label';
-      label.textContent = volume.label || '第' + (index + 1) + '卷';
-
-      var name = document.createElement('span');
-      name.className = 'volume-name';
-      name.textContent = volume.name;
-
-      var status = document.createElement('span');
-      status.className = 'volume-status';
-      status.textContent = live
-        ? '已开放 · ' + chapterCount + ' 章'
-        : '筹备中';
-
-      card.append(label, name, status);
-      fragment.append(card);
-    });
-
-    volumeList.replaceChildren(fragment);
-  }
-
-  Promise.allSettled([Site.loadVolume(), Site.loadOutline()]).then(function (results) {
-    var volumeResult = results[0];
-    var outlineResult = results[1];
-
-    if (volumeResult.status === 'fulfilled') {
-      renderChapters(volumeResult.value);
-    } else {
-      showError(volumeResult.reason && volumeResult.reason.message
-        ? volumeResult.reason.message
-        : '请确认手稿文件仍然存在。');
-    }
-
-    if (outlineResult.status === 'fulfilled') {
-      renderVolumes(
-        outlineResult.value,
-        volumeResult.status === 'fulfilled' ? volumeResult.value.length : 0
-      );
-    }
+  Site.loadContent().then(renderChapters).catch(function (error) {
+    showError(error && error.message ? error.message : '请确认手稿文件仍然存在。');
   });
 })();
